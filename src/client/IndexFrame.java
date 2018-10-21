@@ -80,6 +80,7 @@ public class IndexFrame extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                setOffLine();
                 System.exit(0);
             }
 
@@ -163,6 +164,31 @@ public class IndexFrame extends JFrame {
         };
         java.util.Timer timer = new Timer();
         timer.scheduleAtFixedRate(task, 0, 15000);//每隔15秒登记一次
+    }
+
+    //告诉服务器自己已经离线
+    private void setOffLine() {
+        Socket socket = new Socket();
+        try {
+            socket.connect(new InetSocketAddress(serverAddress, serverPort), 10000);
+            //创建用户信息
+            UserRegisterInfo userRegisterInfo = new UserRegisterInfo();
+            userRegisterInfo.setUserName(fromUser);
+            userRegisterInfo.setPort(listeningPort);
+            userRegisterInfo.setIpAddress(Tools.getLocalHostLanIP());
+            userRegisterInfo.setLastRegisterTime(-1);
+
+            //发送给服务器登记
+            Tools.writeToSocketStream(socket.getOutputStream(), new Gson().toJson(userRegisterInfo));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e2) {
+                e2.printStackTrace();
+            }
+        }
     }
 
 

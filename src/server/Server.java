@@ -60,13 +60,18 @@ public class Server {
         userList.removeIf(tmp -> curTime - tmp.getLastRegisterTime() > 30000);
 
         //更新当前注册用户
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (userRegisterInfo != null) {
             userList.removeIf(tmp -> tmp.getUserName().equals(userRegisterInfo.getUserName()));
-            userRegisterInfo.setLastRegisterTime(curTime);
-            userList.add(userRegisterInfo);
+            if (userRegisterInfo.getLastRegisterTime() != -1) {
+                userRegisterInfo.setLastRegisterTime(curTime);
+                userList.add(userRegisterInfo);
 
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            System.out.println(format.format(curTime) + " register [" + userRegisterInfo.getUserName() + " (" + userRegisterInfo.getIpAddress() + ":" + userRegisterInfo.getPort() + ")" + "]");
+                System.out.println(format.format(curTime) + " register [" + userRegisterInfo.getUserName() + " (" + userRegisterInfo.getIpAddress() + ":" + userRegisterInfo.getPort() + ")" + "]");
+            } else {
+                System.out.println(format.format(curTime) + " offLine  [" + userRegisterInfo.getUserName() + " (" + userRegisterInfo.getIpAddress() + ":" + userRegisterInfo.getPort() + ")" + "]");
+
+            }
         }
         return userList;
     }

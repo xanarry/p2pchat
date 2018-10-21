@@ -6,6 +6,8 @@ import utils.Tools;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Caret;
+import javax.swing.text.Document;
 import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,8 +46,10 @@ public class ChatFrame extends JFrame {
         chatContent.setEditable(false);    // 设置文本域不可编辑
         chatContent.setContentType("text/html");
 
+
         // 创建一个滚动面板，将文本域作为其显示组件
         JScrollPane showPanel = new JScrollPane(chatContent);
+
         JPanel inputPanel = new JPanel(); // 创建一个JPanel面板
         inputField = new JTextField(40);  // 创建一个文本框
 
@@ -167,6 +171,8 @@ public class ChatFrame extends JFrame {
                 socket.close();
             }
         } catch (IOException e) {
+            dispose();
+            JOptionPane.showMessageDialog(null, toUser + "建立连接失败: " + e.getMessage(), "提示", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -243,9 +249,11 @@ public class ChatFrame extends JFrame {
             content = String.format("<b style=\"color:green; font-size:1em\">%s(%s) %s</b><br><b style=\"font-size:1.2em\">%s</b><br>", message.getFromUser(), message.getFromHost(), sdf.format(time), message.getText());
         }
 
-        HTMLDocument doc=(HTMLDocument) chatContent.getStyledDocument();
+        HTMLDocument doc = (HTMLDocument) chatContent.getStyledDocument();
         try {
             doc.insertAfterEnd(doc.getCharacterElement(doc.getLength()), content);
+            //设置总是显示最底部消息
+            chatContent.setCaretPosition(doc.getLength());
         } catch (BadLocationException e) {
             e.printStackTrace();
         } catch (IOException e) {
