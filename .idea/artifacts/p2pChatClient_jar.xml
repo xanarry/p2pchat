@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="p2pChatClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/p2pChatClient_jar</output-path>
+    <root id="archive" name="p2pChat.jar">
+      <element id="module-output" name="p2pChat" />
+      <element id="extracted-dir" path="$USER_HOME$/data/software/outerLibary/gson-2.6.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
