@@ -55,7 +55,7 @@ public class ChatFrame extends JFrame {
 
         sendBt = new JButton("发送"); // 创建一个发送按钮
 
-        Label label = new Label("输入:"); // 创建一个标签
+        Label label = new Label("input:"); // 创建一个标签
         inputPanel.add(label);  // 将标签添加到JPanel面板
         inputPanel.add(inputField); // 将文本框添加到JPanel面板
         inputPanel.add(sendBt);  // 将按钮添加到JPanel面板

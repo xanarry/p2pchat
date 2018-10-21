@@ -85,7 +85,7 @@ public class LoginFrame extends JFrame {
         });
 
         this.add(jp);
-        this.setBounds(550, 350, 320, 180);//设置窗口大小
+        this.setBounds(550, 350, 350, 250);//设置窗口大小
         this.setVisible(true);
 
     }
